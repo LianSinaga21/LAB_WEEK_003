@@ -1,0 +1,7 @@
+<resources>
+    <item name="affogato" type="id" />
+    <item name="americano" type="id" />
+    <item name="latte" type="id" />
+    <item name="mocha" type="id" />
+    <item name="espresso" type="id" />
+</resources>

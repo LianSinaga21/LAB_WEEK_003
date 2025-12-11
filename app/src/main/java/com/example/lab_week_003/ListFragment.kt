@@ -4,46 +4,44 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 
 class ListFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val coffeeNames = listOf(
+        "Affogato",
+        "Americano",
+        "Latte",
+        "Mocha",
+        "Espresso"
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_list, container, false)
-    }
+        val view = inflater.inflate(R.layout.fragment_list, container, false)
+        val layout = view.findViewById<LinearLayout>(R.id.list_container)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        coffeeNames.forEachIndexed { index, name ->
+            val btn = Button(requireContext())
+            btn.text = name
 
-        val coffeeList = listOf<View>(
-            view.findViewById(R.id.affogato),
-            view.findViewById(R.id.americano),
-            view.findViewById(R.id.latte)
-        )
+            btn.setOnClickListener {
+                val detailFragment = DetailFragment.newInstance(index)
 
-        coffeeList.forEach { coffee ->
-            val fragmentBundle = Bundle()
-            fragmentBundle.putInt(COFFEE_ID, coffee.id)
-
-            coffee.setOnClickListener {
-                coffee.findNavController().navigate(
-                    R.id.coffee_id_action,
-                    fragmentBundle
-                )
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, detailFragment)
+                    .addToBackStack(null)
+                    .commit()
             }
-        }
-    }
 
-    companion object {
-        const val COFFEE_ID = "COFFEE_ID"
+            layout.addView(btn)
+        }
+
+        return view
     }
 }

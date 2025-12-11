@@ -13,6 +13,13 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+        // ⬅️ Tambahkan ini (cek dulu apakah fragment belum ada)
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ListFragment())
+                .commit()
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(
             findViewById(R.id.fragment_container)
         ) { v, insets ->
