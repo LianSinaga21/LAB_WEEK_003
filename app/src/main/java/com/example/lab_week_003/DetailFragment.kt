@@ -27,8 +27,11 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val coffeeId = arguments?.getInt(COFFEE_ID, 0) ?: 0
-        setCoffeeData(coffeeId)
+        val id = arguments?.getInt(ListFragment.COFFEE_ID)
+
+        if (id != null) {
+            setCoffeeData(id)
+        }
     }
 
     fun setCoffeeData(id: Int) {
